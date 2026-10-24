@@ -3,8 +3,9 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import { NavLink } from "react-router-dom";
 import Button from "@mui/material/Button";
+import Basket from "./Basket";
 
-export function HomeNavbar() {
+export default function HomeNavbar() {
   const authMember = null;
   return (
     <div className="home-navbar">
@@ -45,7 +46,8 @@ export function HomeNavbar() {
                 Help
               </NavLink>
             </Box>
-            {/* BASKET */}
+
+            <Basket />
 
             {!authMember ? (
               <Box>
