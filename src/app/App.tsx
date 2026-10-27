@@ -18,9 +18,6 @@ function App() {
     <>
       {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
       <Switch>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
         <Route path="/products">
           <ProductsPage />
         </Route>
@@ -32,6 +29,9 @@ function App() {
         </Route>
         <Route path="/help">
           <HelpPage />
+        </Route>
+        <Route path="/">
+          <HomePage />
         </Route>
       </Switch>
       <Footer />
