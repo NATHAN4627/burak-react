@@ -17,21 +17,21 @@ const newDishes = [
 
 export default function NewDishes() {
   return (
-    <div className="new-product-frame">
-      <Container>
-        <Stack className="main">
-          <Box className="category-title">New Dishes</Box>
+    <CssVarsProvider>
+      <div className="new-product-frame">
+        <Container>
+          <Stack className="main">
+            <Box className="category-title">New Dishes</Box>
 
-          <Stack
-            className="cards-frame"
-            direction="row"
-            sx={{
-              flexWrap: "wrap",
-              gap: "20px",
-              justifyContent: "space-between",
-            }}
-          >
-            <CssVarsProvider>
+            <Stack
+              className="cards-frame"
+              direction="row"
+              sx={{
+                flexWrap: "wrap",
+                gap: "20px",
+                justifyContent: "space-between",
+              }}
+            >
               {newDishes.map((ele, index) => (
                 <Card key={index} variant="outlined" className="card">
                   <CardOverflow>
@@ -69,10 +69,10 @@ export default function NewDishes() {
                   </CardOverflow>
                 </Card>
               ))}
-            </CssVarsProvider>
+            </Stack>
           </Stack>
-        </Stack>
-      </Container>
-    </div>
+        </Container>
+      </div>
+    </CssVarsProvider>
   );
 }

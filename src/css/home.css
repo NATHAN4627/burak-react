@@ -64,7 +64,7 @@
   align-items: center;
 }
 
-.homepage .popular-dishes-frame .popular-section .popular-title {
+.homepage .popular-dishes-frame .popular-section .category-title {
   text-align: center;
   font-family: "Roboto Serif";
   font-size: 36px;
@@ -114,6 +114,7 @@
 }
 
 .homepage .new-product-frame .main {
+  width: 100%;
   margin-top: 45px;
   display: flex;
   flex-direction: column;
@@ -130,17 +131,21 @@
 
 .homepage .new-product-frame .main .cards-frame {
   width: 100%;
-  margin: 47px 2px 2px 2px;
+  margin-top: 47px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .homepage .new-product-frame .main .card {
-  height: 335px;
-  width: 270px;
+  width: 23%;
+  min-width: 260px;
+  height: auto;
   cursor: pointer;
 }
+
 .homepage .new-product-frame .product-sale {
   position: absolute;
   margin-top: 10px;
@@ -161,18 +166,17 @@
   color: #f8f8ff;
 }
 
-.homepage .new-products-frame .product-detail {
-  width: auto;
-  height: 49%;
+.homepage .new-product-frame .product-detail {
+  height: 52px;
+  margin-top: 0;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: -12px;
-  border-top: 1px solid;
-  border-color: #f8f8ff;
+  padding: 0 16px;
   background-color: #fafbfb;
 }
 
-.homepage .new-products-frame .product-detail .info {
+.homepage .new-product-frame .product-detail .info {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -180,11 +184,10 @@
   align-items: center;
 }
 
-.homepage .new-products-frame .product-detail .title {
+.homepage .new-product-frame .product-detail .title {
   width: 65px;
   font-weight: 500;
 }
-
 .homepage .new-product-frame .product-detail .price {
   margin-left: 15px;
   font-family: "Poppins";
