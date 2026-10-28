@@ -1,0 +1,370 @@
+/* ===== Variables ===== */
+.products-page {
+  --bg: #f7f8ff;
+  --dark: #181a1b;
+  --gold: #e8b04b;
+  --tan: #d2b48c;
+  --orange: #f5a623;
+  --purple: #8e24aa;
+  --text: #1f1f1f;
+  --card-radius: 40px 8px 40px 8px;
+}
+
+.products-page,
+.products {
+  background: var(--bg);
+  font-family: "Poppins", "Roboto", sans-serif;
+}
+
+.products {
+  padding-top: 40px;
+}
+
+/* ===== Top (search / avatar) area ===== */
+.products .avatar-big-box {
+  width: 100%;
+  min-height: 50px;
+  margin-bottom: 10px;
+}
+
+/* ===== Filter (New / Price / Views) ===== */
+.products .dishes-filter-section {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
+
+.products .dishes-filter-box {
+  flex-direction: row;
+  gap: 8px;
+}
+
+.products .dishes-filter-box .order {
+  min-width: 56px;
+  height: 22px;
+  padding: 0 14px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: capitalize;
+  box-shadow: none;
+  border-radius: 4px;
+}
+
+/* ===== Layout: categories (left) + products (right) ===== */
+.products .list-category-section {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+/* ===== Category (vertical) ===== */
+.products .product-category {
+  flex: 0 0 auto;
+}
+
+.products .category-main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.products .category-main button {
+  width: 100px;
+  height: 34px;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  box-shadow: none;
+  border-radius: 6px;
+}
+
+/* ===== Product grid ===== */
+.products .product-wrapper {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px 24px;
+}
+
+.products .product-card {
+  width: 100%;
+  position: relative;
+  background: transparent;
+  cursor: pointer;
+}
+
+.products .product-img {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.products .product-card:hover .product-img {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* "Normal size" badge */
+.products .product-sale {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--orange);
+  border-radius: 6px;
+  z-index: 2;
+}
+
+/* Cart button — appears on hover, bottom center */
+.products .shop-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translate(-50%, 10px);
+  min-width: 0;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: var(--purple);
+  border-radius: 8px;
+  opacity: 0;
+  transition: all 0.25s ease;
+  z-index: 3;
+}
+
+.products .shop-btn:hover {
+  background: #6a1b9a;
+}
+
+.products .shop-btn img {
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  filter: brightness(0) invert(1);
+}
+
+.products .product-card:hover .shop-btn {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* Views (eye) button — top right */
+.products .view-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  min-width: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 3;
+}
+
+.products .product-card:hover .view-btn {
+  opacity: 1;
+}
+
+/* ===== Product description (title + price) ===== */
+.products .product-card > .product-desc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.products .product-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.products .product-card .product-desc .product-desc {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.products .product-desc svg {
+  font-size: 16px;
+  color: var(--orange);
+}
+
+.products .no-data {
+  grid-column: 1 / -1;
+  padding: 80px 0;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+  color: #888;
+}
+
+/* ===== Pagination ===== */
+.products .pagination-section {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 40px 0 60px;
+}
+
+.products .pagination-section .MuiPaginationItem-root {
+  font-size: 12px;
+  color: #555;
+}
+
+.products .pagination-section .MuiPaginationItem-root.Mui-selected {
+  background: #c62828;
+  color: #fff;
+}
+
+/* ===== Address section ===== */
+.products .address {
+  padding: 0;
+}
+
+.address {
+  background: #fff;
+  padding: 60px 0 80px;
+}
+
+.address .address-area {
+  align-items: center;
+}
+
+.address .address-area .title {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: "Playfair Display", Georgia, serif;
+  color: var(--text);
+  text-align: center;
+}
+
+.address .address-area iframe {
+  width: 100%;
+  max-width: 1320px;
+  height: 420px;
+  border: 0;
+  border-radius: 4px;
+}
+
+/* ===== Family Brands ===== */
+.family-brands {
+  background: #0f1214;
+  padding: 60px 0 70px;
+}
+
+.family-brands .family-brands-area {
+  align-items: center;
+}
+
+.family-brands .category-title {
+  font-size: 22px;
+  font-weight: 600;
+  font-family: "Playfair Display", Georgia, serif;
+  color: #e8b04b;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.family-brands .brands-list {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+}
+
+.family-brands .brand-card {
+  width: 220px;
+  height: 300px;
+  border-radius: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: #1a1d1f;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.18),
+    inset 0 0 12px rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.family-brands .brand-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.family-brands .brand-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 28px rgba(232, 176, 75, 0.45),
+    inset 0 0 12px rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 560px) {
+  .family-brands .brand-card {
+    width: 100%;
+    max-width: 260px;
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1200px) {
+  .products .product-wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .products .list-category-section {
+    flex-direction: column;
+  }
+
+  .products .category-main {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .products .product-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .products .product-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .products .product-img {
+    height: 220px;
+  }
+}
+
+
+/* CHOSEN PRODUCT */
+
