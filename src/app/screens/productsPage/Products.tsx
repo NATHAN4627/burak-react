@@ -21,11 +21,40 @@ const products = [
 ];
 
 export default function Products() {
+  const [searchText, setSearchText] = useState<string>("");
+
+  const searchHandler = () => {
+    console.log("search:", searchText);
+  };
+
   return (
     <div className="products">
       <Container>
         <Stack direction={"column"} align-items={"center"}>
-          <Stack className="avatar-big-box"></Stack>
+          <Stack className="avatar-big-box">
+            <Box className={"search-big-box"}>
+              <span className={"search-title"}>Burak Restaurant</span>
+              <input
+                type={"search"}
+                className={"single-search-input"}
+                name={"singleResearch"}
+                placeholder={"Type here"}
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") searchHandler();
+                }}
+              />
+              <Button
+                className={"single-search-btn"}
+                variant={"contained"}
+                endIcon={<SearchIcon />}
+                onClick={searchHandler}
+              >
+                Search
+              </Button>
+            </Box>
+          </Stack>
           <Stack className="dishes-filter-section">
             <Stack className={"dishes-filter-box"}>
               <Button
