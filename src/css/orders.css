@@ -1,0 +1,370 @@
+/* ===== Orders page ===== */
+.order-page {
+  --bg: #f8f8ff;
+  --card-bg: #f9f9ff;
+  --card-border: #d6d6ee;
+  --card-shadow: #c9c9dd;
+  --text: #111;
+  --muted: #6b7280;
+  --tan: #d2b48c;
+  --tab: #e0a96d;
+  --green: #6ab04c;
+  --blue: #3b86d4;
+  background: var(--bg);
+  padding: 40px 0 120px;
+  font-family: "Poppins", "Roboto", sans-serif;
+}
+
+.order-page .order-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 36px;
+}
+
+.order-page .order-left-box {
+  flex: 1;
+  min-width: 0;
+}
+
+.order-page .order-right-box {
+  flex: 0 0 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ===== Tabs (MUI Lab) ===== */
+.order-page .MuiTabs-root {
+  min-height: 34px;
+  margin: 0 0 22px 20px;
+  max-width: 430px;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-page .MuiTab-root {
+  min-height: 34px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: none;
+  color: var(--tab);
+}
+
+.order-page .MuiTab-root.Mui-selected {
+  color: var(--text);
+}
+
+.order-page .MuiTabs-indicator {
+  height: 2px;
+  background: #555;
+}
+
+.order-page .MuiTabPanel-root {
+  padding: 0;
+}
+
+/* ===== Order card ===== */
+.order-main-box {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 14px 24px 12px 22px;
+  background: var(--card-bg);
+  border: 5px solid var(--card-border);
+  border-radius: 16px;
+  box-shadow: 6px 6px 0 var(--card-shadow),
+    inset 0 0 8px rgba(160, 160, 220, 0.35);
+  box-sizing: border-box;
+}
+
+.order-main-box .order-box-scroll {
+  max-height: 112px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* ===== Dish row ===== */
+.order-main-box .orders-name-price {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 32px;
+  margin-bottom: 0;
+}
+
+.order-main-box .order-dish-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.order-main-box .title-dish {
+  flex: 1;
+  margin: 0 0 0 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.order-main-box .price-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-right: 50px;
+  min-width: 110px;
+}
+
+.order-main-box .price-box p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.order-main-box .price-box img {
+  width: 10px;
+  height: 10px;
+  opacity: 0.8;
+}
+
+/* ===== Total row ===== */
+.order-main-box .total-price-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* Finished: markazda */
+  margin-top: 10px;
+  padding-top: 4px;
+}
+
+.order-main-box .box-total {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.order-main-box .box-total p {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* nomlar (Product price / delivery cost / Total) qora, kattaroq */
+.order-main-box .box-total p:nth-child(1),
+.order-main-box .box-total p:nth-child(4),
+.order-main-box .box-total p:nth-child(7) {
+  color: var(--text);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.order-main-box .box-total img {
+  width: 10px;
+  height: 10px;
+}
+
+.order-main-box .data-compl {
+  margin: 0 0 0 20px;
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ===== Buttons ===== */
+.order-main-box .verify-button,
+.order-main-box .cancel-button,
+.order-main-box .pay-button {
+  height: 24px;
+  padding: 0 14px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* margin-left:auto tugmani o'ngga suradi */
+.order-main-box .verify-button {
+  margin-left: auto;
+  background: var(--blue);
+  color: #fff;
+}
+
+.order-main-box .verify-button:hover {
+  background: #2f74bd;
+}
+
+.order-main-box .cancel-button {
+  margin-left: auto;
+  background: var(--tan);
+  color: #333;
+}
+
+.order-main-box .cancel-button:hover {
+  background: #c4a577;
+}
+
+.order-main-box .pay-button {
+  margin-left: 40px;
+  background: var(--green);
+  color: #fff;
+}
+
+.order-main-box .pay-button:hover {
+  background: #5a9b3f;
+}
+
+/* ===== Right side: user card ===== */
+.order-page .member-box,
+.order-page .payment-box {
+  padding: 18px 12px 12px;
+  background: var(--card-bg);
+  border: 5px solid var(--card-border);
+  border-radius: 16px;
+  box-shadow: 6px 6px 0 var(--card-shadow),
+    inset 0 0 8px rgba(160, 160, 220, 0.35);
+  box-sizing: border-box;
+}
+
+.order-page .member-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.order-page .order-user-img {
+  position: relative;
+  width: 74px;
+  height: 74px;
+  border-radius: 24px;
+  margin-top: 4px;
+}
+
+.order-page .order-user-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+.order-page .order-user-icon {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 18px;
+  height: 18px;
+  padding: 2px;
+  border-radius: 50%;
+  background: #9a9a9a;
+  box-sizing: border-box;
+}
+
+.order-page .order-user-name {
+  margin-top: 6px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.order-page .order-user-prof {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: #9ca3af;
+}
+
+.order-page .liner {
+  width: 100%;
+  height: 2px;
+  margin: 14px 0 10px;
+  background: #9a9aa8;
+}
+
+.order-page .order-user-address {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text);
+}
+
+/* ===== Right side: payment card ===== */
+.order-page .payment-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order-page .payment-box input {
+  width: 100%;
+  height: 26px;
+  padding: 0 8px;
+  font-size: 10px;
+  color: #555;
+  background: #f0f0f4;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.order-page .payment-box .half-input {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}
+
+.order-page .payment-box .cards-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 18px;
+}
+
+.order-page .payment-box .cards-box img {
+  height: 16px;
+  width: auto;
+}
+
+/* ===== Empty state ===== */
+.order-page .MuiTabPanel-root > div > div[style] img {
+  max-width: 100%;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1000px) {
+  .order-page .order-wrapper {
+    flex-direction: column;
+  }
+
+  .order-page .order-right-box {
+    flex: 1;
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .order-main-box {
+    padding: 12px 14px;
+  }
+
+  .order-main-box .price-box {
+    margin-right: 0;
+  }
+
+  .order-main-box .total-price-box {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
