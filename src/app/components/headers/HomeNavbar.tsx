@@ -87,7 +87,7 @@ export default function HomeNavbar() {
           <Stack className="detail">
             <Box className="head-main-txt">World's Most Delicious Cousine</Box>
             <Box className="welcome-txt">The Choice, not just a choice</Box>
-            <Box className="service-txt">{count} hours service</Box>
+            <Box className="service-txt">24 hours service</Box>
             <Box className="signup">
               {!authMember ? (
                 <Button
