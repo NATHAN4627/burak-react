@@ -13,3 +13,8 @@ export const retrieveNewDishes = createSelector(
   (HomePage) => HomePage.newDishes
 );
 
+export const retrieveTopUsers = createSelector(
+  selectHomePage,
+  (HomePage) => HomePage.topUsers
+);
+
