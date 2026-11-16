@@ -7,15 +7,21 @@ import Typography from "@mui/joy/Typography";
 import { CssVarsProvider, Stack } from "@mui/joy";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Divider from "../../components/divider";
+import { retrieveNewDishes } from "./selector";
+import { createSelector } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { serverApi } from "../../../lib/config";
+import { Product } from "../../../lib/types/product";
+import { ProductCollection } from "../../../lib/enums/product.enum";
 
-const newDishes = [
-  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab.webp" },
-  { productName: "Lavash", imagePath: "/img/lavash.webp" },
-];
+/** REDUX SELECTOR **/
+const newDishesRetriever = createSelector(retrieveNewDishes, (newDishes) => ({
+  newDishes,
+}));
 
 export default function NewDishes() {
+  const { newDishes } = useSelector(newDishesRetriever);
+
   return (
     <CssVarsProvider>
       <div className="new-product-frame">
@@ -32,43 +38,52 @@ export default function NewDishes() {
               }}
             >
               {newDishes.length !== 0 ? (
-                newDishes.map((ele, index) => (
-                  <Card key={index} variant="outlined" className="card">
-                    <CardOverflow>
-                      <div className="product-sale">Normal Size</div>
-                      <AspectRatio ratio="1">
-                        <img src={ele.imagePath} alt={ele.productName} />
-                      </AspectRatio>
-                    </CardOverflow>
+                newDishes.map((ele: Product) => {
+                  const imagePath = `${serverApi}/${ele.productImages[0]}`;
+                  const sizeVolume =
+                    ele.productCollection === ProductCollection.DRINK
+                      ? ele.productVolume + "L"
+                      : ele.productSize + " size";
+                  return (
+                    <Card key={ele._id} variant="outlined" className="card">
+                      <CardOverflow>
+                        <div className="product-sale">{sizeVolume}</div>
+                        <AspectRatio ratio="1">
+                          <img src={imagePath} alt={ele.productName} />
+                        </AspectRatio>
+                      </CardOverflow>
 
-                    <CardOverflow variant="soft" className="product-detail">
-                      <Stack
-                        className="info"
-                        direction="row"
-                        sx={{
-                          width: "100%",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Stack direction="row" sx={{ alignItems: "center" }}>
-                          <Typography className="title">
-                            {ele.productName}
+                      <CardOverflow variant="soft" className="product-detail">
+                        <Stack
+                          className="info"
+                          direction="row"
+                          sx={{
+                            width: "100%",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Stack direction="row" sx={{ alignItems: "center" }}>
+                            <Typography className="title">
+                              {ele.productName}
+                            </Typography>
+                            <Divider width="2" height="24" bg="#d9d9d9" />
+                            <Typography className="price">
+                              {ele.productPrice}
+                            </Typography>
+                          </Stack>
+
+                          <Typography className="views">
+                            {ele.productViews}
+                            <VisibilityIcon
+                              style={{ fontSize: 20, marginLeft: "5px" }}
+                            />
                           </Typography>
-                          <Divider width="2" height="24" bg="#d9d9d9" />
-                          <Typography className="price">$12</Typography>
                         </Stack>
-
-                        <Typography className="views">
-                          20
-                          <VisibilityIcon
-                            style={{ fontSize: 20, marginLeft: "5px" }}
-                          />
-                        </Typography>
-                      </Stack>
-                    </CardOverflow>
-                  </Card>
-                ))
+                      </CardOverflow>
+                    </Card>
+                  );
+                })
               ) : (
                 <Box className="no-data">New Products are not avaliable!</Box>
               )}
