@@ -1,5 +1,5 @@
 import { Badge, Box, Button, Container, Stack } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -8,25 +8,22 @@ import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import FamilyBrands from "./FamilyBrands";
+import { setProducts } from "./slice";
+import { Member } from "../../../lib/types/member";
+import { Product } from "../../../lib/types/product";
+import { createSelector, Dispatch } from "@reduxjs/toolkit";
+import { retrieveProducts } from "./selector";
 
-const products = [
-  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab.webp" },
-  { productName: "Lavash", imagePath: "/img/lavash.webp" },
-  { productName: "Lavash", imagePath: "/img/lavash.webp" },
-  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
-];
+/** REDUX SLICE **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setProducts: (data: Product[]) => dispatch(setProducts(data)),
+});
+
+const productsRetriever = createSelector(retrieveProducts, (products) => ({
+  products,
+}));
 
 export default function Products() {
-  const [searchText, setSearchText] = useState<string>("");
-
-  const searchHandler = () => {
-    console.log("search:", searchText);
-  };
-
   return (
     <div className="products">
       <Container>
@@ -121,7 +118,7 @@ export default function Products() {
                           <Badge badgeContent={20} color="secondary">
                             <RemoveRedEyeIcon
                               sx={{
-                                color: 20 ? "gray" : "white",
+                                color: "gray",
                               }}
                             />
                           </Badge>

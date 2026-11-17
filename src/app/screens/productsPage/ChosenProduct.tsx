@@ -5,11 +5,32 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Divider from "../../components/divider";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/navigation";
-import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper";
+import { createSelector, Dispatch } from "@reduxjs/toolkit";
+import { setChosenProduct, setRestaurant } from "./slice";
+import { Product } from "../../../lib/types/product";
+import { retrieveChosenProduct, retrieveRestaurant } from "./selector";
+import { Member } from "../../../lib/types/member";
+
+/** REDUX SLICE **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setRestaurant: (data: Member | null) => dispatch(setRestaurant(data)),
+  setChosenProduct: (data: Product | null) => dispatch(setChosenProduct(data)),
+});
+
+const chosenProductRetriever = createSelector(
+  retrieveChosenProduct,
+  (chosenProduct) => ({
+    chosenProduct,
+  }),
+);
+
+const restaurantRetriever = createSelector(
+  retrieveRestaurant,
+  (restaurant) => ({
+    restaurant,
+  }),
+);
 
 export default function ChosenProduct() {
   return (
@@ -31,7 +52,7 @@ export default function ChosenProduct() {
                     <img className="slider-image" src={ele} />
                   </SwiperSlide>
                 );
-              }
+              },
             )}
           </Swiper>
         </Stack>
