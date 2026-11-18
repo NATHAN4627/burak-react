@@ -1,5 +1,5 @@
 import { Badge, Box, Button, Container, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -13,6 +13,10 @@ import { Member } from "../../../lib/types/member";
 import { Product } from "../../../lib/types/product";
 import { createSelector, Dispatch } from "@reduxjs/toolkit";
 import { retrieveProducts } from "./selector";
+import ProductService from "../../services/ProductService";
+import { ProductCollection } from "../../../lib/enums/product.enum";
+import { useDispatch, useSelector } from "react-redux";
+import { serverApi } from "../../../lib/config";
 
 /** REDUX SLICE **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -24,6 +28,24 @@ const productsRetriever = createSelector(retrieveProducts, (products) => ({
 }));
 
 export default function Products() {
+  const { setProducts } = actionDispatch(useDispatch());
+  const { products } = useSelector(productsRetriever);
+
+  useEffect(() => {
+    const product = new ProductService();
+
+    product
+      .getProducts({
+        order: "createdAt",
+        page: 1,
+        limit: 8,
+        productCollection: ProductCollection.DISH,
+        search: "",
+      })
+      .then((data) => setProducts(data))
+      .catch((err) => console.log(err));
+  });
+
   return (
     <div className="products">
       <Container>
@@ -99,14 +121,19 @@ export default function Products() {
             </Stack>
             <Stack className="product-wrapper">
               {products.length !== 0 ? (
-                products.map((product, index) => {
+                products.map((product: Product) => {
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  const sizeVolume =
+                    product.productCollection === ProductCollection.DRINK
+                      ? product.productVolume + " L"
+                      : product.productSize + " size";
                   return (
-                    <Stack key={index} className={"product-card"}>
+                    <Stack key={product._id} className={"product-card"}>
                       <Stack
                         className={"product-img"}
-                        sx={{ backgroundImage: `url(${product.imagePath})` }}
+                        sx={{ backgroundImage: `url(${imagePath})` }}
                       >
-                        <div className={"product-sale"}>Normal size</div>
+                        <div className={"product-sale"}>{sizeVolume}</div>
                         <Button className={"shop-btn"}>
                           <img
                             src={"/icons/shopping-cart.svg"}
@@ -115,10 +142,14 @@ export default function Products() {
                           />
                         </Button>
                         <Button className={"view-btn"} sx={{ right: "36px" }}>
-                          <Badge badgeContent={20} color="secondary">
+                          <Badge
+                            badgeContent={product.productViews}
+                            color="secondary"
+                          >
                             <RemoveRedEyeIcon
                               sx={{
-                                color: "gray",
+                                color:
+                                  product.productViews === 0 ? "gray" : "white",
                               }}
                             />
                           </Badge>
@@ -131,7 +162,7 @@ export default function Products() {
                         </span>
                         <div className={"product-desc"}>
                           <MonetizationOnIcon />
-                          {12}
+                          {product.productPrice}
                         </div>
                       </Box>
                     </Stack>
