@@ -8,10 +8,14 @@ import { CardItem } from "../../../lib/types/search";
 
 interface HomeNavbarProps {
   cardItems: CardItem[];
+  onAdd: (item: CardItem) => void;
+  onRemove: (item: CardItem) => void;
+  onDelete: (item: CardItem) => void;
+  onDeleteAll: () => void;
 }
 
 export default function HomeNavbar(props: HomeNavbarProps) {
-  const { cardItems } = props;
+  const { cardItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
   const authMember = null;
 
   return (
@@ -54,8 +58,14 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               </NavLink>
             </Box>
 
-            {/* App'dan kelgan savat ro'yxatini Basket'ga uzatadi. */}
-            <Basket cardItems={cardItems} />
+            {/* App'dan kelgan savat ro'yxati va amallarini Basket'ga uzatadi. */}
+            <Basket
+              cardItems={cardItems}
+              onAdd={onAdd}
+              onRemove={onRemove}
+              onDelete={onDelete}
+              onDeleteAll={onDeleteAll}
+            />
 
             {!authMember ? (
               <Box>

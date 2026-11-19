@@ -5,8 +5,12 @@ import ProductsPageReducer from "./screens/productsPage/slice";
 
 export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
-    // @ts-ignore
-    getDefaultMiddleware().concat(reduxLogger),
+    getDefaultMiddleware({
+      // State tekshiruvi 128 ms dan oshsa, ogohlantiradi.
+      immutableCheck: {
+        warnAfter: 128,
+      },
+    }),
   reducer: {
     homePage: HomePageReducer,
     productsPage: ProductsPageReducer,

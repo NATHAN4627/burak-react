@@ -22,11 +22,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { serverApi } from "../../../lib/config";
 import { CardItem } from "../../../lib/types/search";
 
-// Savatga qo'shish funksiyasi prop orqali keladi.
-interface ProductsPageProps {
-  onAdd: (item: CardItem) => void;
-}
-
 /** REDUX SLICE **/
 const actionDispatch = (dispatch: Dispatch) => ({
   setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
@@ -47,8 +42,12 @@ const restaurantRetriever = createSelector(
   }),
 );
 
+// Savatga qo'shish funksiyasi prop orqali keladi.
+interface ProductsPageProps {
+  onAdd: (item: CardItem) => void;
+}
+
 export default function ChosenProduct(props: ProductsPageProps) {
-  // onAdd hali "Add To Basket" tugmasiga ulanmagan.
   const { onAdd } = props;
   const { productId } = useParams<{ productId: string }>();
   const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
@@ -123,7 +122,21 @@ export default function ChosenProduct(props: ProductsPageProps) {
               <span>{chosenProduct?.productPrice}</span>
             </div>
             <div className={"button-box"}>
-              <Button variant="contained">Add To Basket</Button>
+              <Button
+                variant="contained"
+                onClick={(e) => {
+                  // Ochilgan mahsulotdan bir dona savatga qo'shadi.
+                  onAdd({
+                    _id: chosenProduct._id,
+                    quantity: 1,
+                    name: chosenProduct.productName,
+                    price: chosenProduct.productPrice,
+                    image: chosenProduct.productImages[0],
+                  });
+                }}
+              >
+                Add To Basket
+              </Button>
             </div>
           </Box>
         </Stack>
