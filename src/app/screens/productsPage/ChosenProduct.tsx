@@ -20,6 +20,12 @@ import ProductService from "../../services/ProductService";
 import MemberService from "../../services/MemberService";
 import { useDispatch, useSelector } from "react-redux";
 import { serverApi } from "../../../lib/config";
+import { CardItem } from "../../../lib/types/search";
+
+// Savatga qo'shish funksiyasi prop orqali keladi.
+interface ProductsPageProps {
+  onAdd: (item: CardItem) => void;
+}
 
 /** REDUX SLICE **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -41,7 +47,9 @@ const restaurantRetriever = createSelector(
   }),
 );
 
-export default function ChosenProduct() {
+export default function ChosenProduct(props: ProductsPageProps) {
+  // onAdd hali "Add To Basket" tugmasiga ulanmagan.
+  const { onAdd } = props;
   const { productId } = useParams<{ productId: string }>();
   const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
   const { chosenProduct } = useSelector(chosenProductRetriever);

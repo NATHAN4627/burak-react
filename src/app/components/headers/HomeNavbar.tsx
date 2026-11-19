@@ -4,8 +4,14 @@ import Box from "@mui/material/Box";
 import { NavLink } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Basket from "./Basket";
+import { CardItem } from "../../../lib/types/search";
 
-export default function HomeNavbar() {
+interface HomeNavbarProps {
+  cardItems: CardItem[];
+}
+
+export default function HomeNavbar(props: HomeNavbarProps) {
+  const { cardItems } = props;
   const authMember = null;
 
   return (
@@ -48,7 +54,8 @@ export default function HomeNavbar() {
               </NavLink>
             </Box>
 
-            <Basket />
+            {/* App'dan kelgan savat ro'yxatini Basket'ga uzatadi. */}
+            <Basket cardItems={cardItems} />
 
             {!authMember ? (
               <Box>

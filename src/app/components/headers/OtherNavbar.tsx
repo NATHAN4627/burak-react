@@ -4,8 +4,14 @@ import Box from "@mui/material/Box";
 import { NavLink } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Basket from "./Basket";
+import { CardItem } from "../../../lib/types/search";
 
-export default function OtherNavbar() {
+interface OtherNavbarProps {
+  cardItems: CardItem[];
+}
+
+export default function OtherNavbar(props: OtherNavbarProps) {
+  const { cardItems } = props;
   const authMember = true;
   return (
     <div className="other-navbar">
@@ -45,7 +51,8 @@ export default function OtherNavbar() {
               </NavLink>
             </Box>
 
-            <Basket />
+            {/* App'dan kelgan savat ro'yxatini Basket'ga uzatadi. */}
+            <Basket cardItems={cardItems} />
 
             {!authMember ? (
               <Box>

@@ -9,7 +9,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import FamilyBrands from "./FamilyBrands";
 import { setProducts } from "./slice";
-import { Member } from "../../../lib/types/member";
 import { Product, ProductInquery } from "../../../lib/types/product";
 import { createSelector, Dispatch } from "@reduxjs/toolkit";
 import { retrieveProducts } from "./selector";
@@ -18,6 +17,12 @@ import { ProductCollection } from "../../../lib/enums/product.enum";
 import { useDispatch, useSelector } from "react-redux";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
+import { CardItem } from "../../../lib/types/search";
+
+// Mahsulotni savatga qo'shish uchun App'dan keladigan funksiya.
+interface ProductsPageProps {
+  onAdd: (item: CardItem) => void;
+}
 
 /** REDUX SLICE **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -28,7 +33,8 @@ const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
-export default function Products() {
+export default function Products(props: ProductsPageProps) {
+  const { onAdd } = props;
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquery>({
@@ -90,7 +96,7 @@ export default function Products() {
         <Stack direction={"column"} align-items={"center"}>
           <Stack className="avatar-big-box">
             <Box className={"search-big-box"}>
-              <span className={"search-title"}>Burak Restaurant</span>
+              <span className={"search-title"}>Burak Restaurant </span>
               <input
                 type={"search"}
                 className={"single-search-input"}
@@ -241,7 +247,21 @@ export default function Products() {
                         sx={{ backgroundImage: `url(${imagePath})` }}
                       >
                         <div className={"product-sale"}>{sizeVolume}</div>
-                        <Button className={"shop-btn"}>
+                        <Button
+                          className={"shop-btn"}
+                          onClick={(e) => {
+                            // Tanlangan mahsulotni boshlang'ich miqdor 1 bilan uzatadi.
+                            onAdd({
+                              _id: product._id,
+                              quantity: 1,
+                              name: product.productName,
+                              price: product.productPrice,
+                              image: product.productImages[0],
+                            });
+                            // Karta bosilishi va mahsulot sahifasiga o'tishni to'xtatadi.
+                            e.stopPropagation();
+                          }}
+                        >
                           <img
                             src={"/icons/shopping-cart.svg"}
                             style={{ display: "flex" }}
