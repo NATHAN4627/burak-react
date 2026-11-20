@@ -118,7 +118,7 @@ export default function Basket(props: BasketProps) {
               {cardItems.map((item: CardItem) => {
                 const imagePath = `${serverApi}/${item.image}`;
                 return (
-                  <Box className={"basket-info-box"}>
+                  <Box key={item._id} className={"basket-info-box"}>
                     <div className={"cancel-btn"}>
                       {/* Shu mahsulotni savatdan o'chiradi. */}
                       <CancelIcon
