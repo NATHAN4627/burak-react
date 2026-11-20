@@ -12,10 +12,20 @@ interface HomeNavbarProps {
   onRemove: (item: CardItem) => void;
   onDelete: (item: CardItem) => void;
   onDeleteAll: () => void;
+  setSignupOpen: (isOpen: boolean) => void;
+  setLoginOpen: (isOpen: boolean) => void;
 }
 
 export default function HomeNavbar(props: HomeNavbarProps) {
-  const { cardItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
+  const {
+    cardItems,
+    onAdd,
+    onRemove,
+    onDelete,
+    onDeleteAll,
+    setSignupOpen,
+    setLoginOpen,
+  } = props;
   const authMember = null;
 
   return (
@@ -69,7 +79,13 @@ export default function HomeNavbar(props: HomeNavbarProps) {
 
             {!authMember ? (
               <Box>
-                <Button variant="contained" className="login-button">
+                <Button
+                  variant="contained"
+                  className="login-button"
+                  onClick={() => {
+                    setLoginOpen(true);
+                  }}
+                >
                   Login
                 </Button>
               </Box>
@@ -90,7 +106,11 @@ export default function HomeNavbar(props: HomeNavbarProps) {
             <Box className="service-txt">24 hours service</Box>
             <Box className="signup">
               {!authMember ? (
-                <Button variant="contained" className="signup-button">
+                <Button
+                  variant="contained"
+                  className="signup-button"
+                  onClick={() => setSignupOpen(true)}
+                >
                   SIGNUP
                 </Button>
               ) : null}

@@ -1,5 +1,5 @@
 import { serverApi } from "../../lib/config";
-import { Member } from "../../lib/types/member";
+import { Member, MemberInput } from "../../lib/types/member";
 import axios from "axios";
 
 class MemberService {
@@ -31,6 +31,20 @@ class MemberService {
       return result.data;
     } catch (err) {
       console.log("Error, getTopUsers:", err);
+      throw err;
+    }
+  }
+
+  public async signup(input: MemberInput): Promise<Member> {
+    try {
+      let url = this.path + "/member/signup";
+
+      const result = await axios.post(url, input, { withCredentials: true });
+      localStorage.setItem("memberData", JSON.stringify(result.data.member));
+
+      return result.data.member;
+    } catch (err) {
+      console.log(err);
       throw err;
     }
   }
