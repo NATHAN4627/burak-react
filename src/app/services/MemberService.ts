@@ -62,6 +62,18 @@ class MemberService {
       throw err;
     }
   }
+
+  public async logout(): Promise<void> {
+    try {
+      let url = this.path + "/member/logout";
+
+      await axios.post(url, {}, { withCredentials: true });
+      localStorage.removeItem("accessToken");
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
 }
 
 export default MemberService;
