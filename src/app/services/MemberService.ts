@@ -1,5 +1,5 @@
 import { serverApi } from "../../lib/config";
-import { Member, MemberInput } from "../../lib/types/member";
+import { LoginInput, Member, MemberInput } from "../../lib/types/member";
 import axios from "axios";
 
 class MemberService {
@@ -38,6 +38,20 @@ class MemberService {
   public async signup(input: MemberInput): Promise<Member> {
     try {
       let url = this.path + "/member/signup";
+
+      const result = await axios.post(url, input, { withCredentials: true });
+      localStorage.setItem("memberData", JSON.stringify(result.data.member));
+
+      return result.data.member;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  public async login(input: LoginInput): Promise<Member> {
+    try {
+      let url = this.path + "/member/login";
 
       const result = await axios.post(url, input, { withCredentials: true });
       localStorage.setItem("memberData", JSON.stringify(result.data.member));
