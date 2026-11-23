@@ -11,27 +11,31 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       : null;
   });
 
-  useEffect(() => {
-    const cookies = new Cookies();
-    const syncAuth = () => {
-      if (!cookies.get("accessToken")) localStorage.removeItem("memberData");
-      if (!localStorage.getItem("memberData")) setAuthMember(null);
-    };
+  const [orderBuilder, setOrderBuilder] = useState<Date>(new Date());
 
-    syncAuth();
-    cookies.addChangeListener(syncAuth);
-    window.addEventListener("storage", syncAuth);
-    window.addEventListener("focus", syncAuth);
+  // useEffect(() => {
+  //   const cookies = new Cookies();
+  //   const syncAuth = () => {
+  //     if (!cookies.get("accessToken")) localStorage.removeItem("memberData");
+  //     if (!localStorage.getItem("memberData")) setAuthMember(null);
+  //   };
 
-    return () => {
-      cookies.removeChangeListener(syncAuth);
-      window.removeEventListener("storage", syncAuth);
-      window.removeEventListener("focus", syncAuth);
-    };
-  }, []);
+  //   syncAuth();
+  //   cookies.addChangeListener(syncAuth);
+  //   window.addEventListener("storage", syncAuth);
+  //   window.addEventListener("focus", syncAuth);
+
+  //   return () => {
+  //     cookies.removeChangeListener(syncAuth);
+  //     window.removeEventListener("storage", syncAuth);
+  //     window.removeEventListener("focus", syncAuth);
+  //   };
+  // }, []);
 
   return (
-    <GlobalContext.Provider value={{ authMember, setAuthMember }}>
+    <GlobalContext.Provider
+      value={{ authMember, setAuthMember, orderBuilder, setOrderBuilder }}
+    >
       {children}
     </GlobalContext.Provider>
   );

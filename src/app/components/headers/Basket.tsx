@@ -24,7 +24,7 @@ interface BasketProps {
 
 export default function Basket(props: BasketProps) {
   const { cardItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
-  const { authMember } = useGlobals();
+  const { authMember, setOrderBuilder } = useGlobals();
   const history = useHistory();
   // Narxni miqdorga ko'paytirib, barcha mahsulotlar bo'yicha jamlaydi.
   const itemsPrice = cardItems.reduce(
@@ -56,6 +56,7 @@ export default function Basket(props: BasketProps) {
 
       onDeleteAll();
 
+      setOrderBuilder(new Date());
       history.push("/orders");
     } catch (err) {
       console.log(err);

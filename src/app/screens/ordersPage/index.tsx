@@ -7,12 +7,13 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PausedOrders from "./PausedOrders";
 import ProcessOrders from "./ProcessOrders";
 import FinishedOrders from "./FinishedOrders";
-import "../../../css/orders.css";
 import { setFinishedOrders, setPausedOrders, setProcessOrders } from "./slice";
 import { Order, OrderInquery } from "../../../lib/types/order";
 import { useDispatch } from "react-redux";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import OrderService from "../../services/OrderService";
+import { useGlobals } from "../../hooks/useGlobals";
+import "../../../css/orders.css";
 
 /** REDUX SLICE **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -24,6 +25,7 @@ const actionDispatch = (dispatch: Dispatch) => ({
 export default function OrdersPage() {
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
     actionDispatch(useDispatch());
+  const { orderBuilder } = useGlobals();
   const [value, setValue] = useState("1");
   const [orderInquiry, setOrderInquiry] = useState<OrderInquery>({
     page: 1,
@@ -47,7 +49,7 @@ export default function OrdersPage() {
       .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.FINISH })
       .then((data) => setFinishedOrders(data))
       .catch((err) => console.log(err));
-  }, [orderInquiry]);
+  }, [orderInquiry, orderBuilder]);
 
   /** HANDLERS */
 
@@ -67,8 +69,8 @@ export default function OrdersPage() {
                 <Tab label="Proccess Order" value={"2"} />
                 <Tab label="Finished Orders" value={"3"} />
               </TabList>
-              <PausedOrders />
-              <ProcessOrders />
+              <PausedOrders setValue={setValue} />
+              <ProcessOrders setValue={setValue}/>
               <FinishedOrders />
             </TabContext>
           </div>
