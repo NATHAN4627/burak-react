@@ -1,4 +1,5 @@
 import React, { useState, SyntheticEvent } from "react";
+import type { Dispatch } from "@reduxjs/toolkit";
 import { Container, Box, Tab } from "@mui/material";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -7,9 +8,25 @@ import PausedOrders from "./PausedOrders";
 import ProcessOrders from "./ProcessOrders";
 import FinishedOrders from "./FinishedOrders";
 import "../../../css/orders.css";
+import { setFinishedOrders, setPausedOrders, setProcessOrders } from "./slice";
+import { Order } from "../../../lib/types/order";
+import { useDispatch } from "react-redux";
+
+/** REDUX SLICE **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
+  setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
+  setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
+});
 
 export default function OrdersPage() {
+  const { setPausedOrders, setProcessOrders, setFinishedOrders } =
+    actionDispatch(useDispatch());
+
   const [value, setValue] = useState("1");
+
+  /** HANDLERS */
+  
 
   const handleChange = (e: SyntheticEvent, newValue: string) => {
     setValue(newValue);
