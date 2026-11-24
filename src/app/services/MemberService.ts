@@ -1,5 +1,10 @@
 import { serverApi } from "../../lib/config";
-import { LoginInput, Member, MemberInput } from "../../lib/types/member";
+import {
+  LoginInput,
+  Member,
+  MemberInput,
+  MemberUpdateInput,
+} from "../../lib/types/member";
 import axios from "axios";
 
 class MemberService {
@@ -71,6 +76,32 @@ class MemberService {
       localStorage.removeItem("accessToken");
     } catch (err) {
       console.log(err);
+      throw err;
+    }
+  }
+
+  public async updateMember(input: MemberUpdateInput): Promise<Member> {
+    try {
+      const formData = new FormData();
+      formData.append("memberNick", input.memberNick || "");
+      formData.append("memberPhone", input.memberPhone || "");
+      formData.append("memberAddress", input.memberAddress || "");
+      formData.append("memberDesc", input.memberDesc || "");
+      formData.append("memberImage", input.memberImage || "");
+
+      const result = await axios(`${serverApi}/member/update`, {
+        method: "POST",
+        data: formData,
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      localStorage.setItem("memberData", JSON.stringify(result.data));
+      return result.data;
+    } catch (err) {
+      console.log("Error, updateMember:", err);
       throw err;
     }
   }

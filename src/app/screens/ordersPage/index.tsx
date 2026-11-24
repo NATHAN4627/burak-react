@@ -14,6 +14,9 @@ import { OrderStatus } from "../../../lib/enums/order.enum";
 import OrderService from "../../services/OrderService";
 import { useGlobals } from "../../hooks/useGlobals";
 import "../../../css/orders.css";
+import { useHistory } from "react-router-dom";
+import { MemberType } from "../../../lib/enums/member.enum";
+import { serverApi } from "../../../lib/config";
 
 /** REDUX SLICE **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -25,7 +28,8 @@ const actionDispatch = (dispatch: Dispatch) => ({
 export default function OrdersPage() {
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
     actionDispatch(useDispatch());
-  const { orderBuilder } = useGlobals();
+  const history = useHistory();
+  const { authMember, orderBuilder } = useGlobals();
   const [value, setValue] = useState("1");
   const [orderInquiry, setOrderInquiry] = useState<OrderInquery>({
     page: 1,
@@ -57,6 +61,7 @@ export default function OrdersPage() {
     setValue(newValue);
   };
 
+  if (!authMember) history.push("/");
   return (
     <div className={"order-page"}>
       <Container>
@@ -70,7 +75,7 @@ export default function OrdersPage() {
                 <Tab label="Finished Orders" value={"3"} />
               </TabList>
               <PausedOrders setValue={setValue} />
-              <ProcessOrders setValue={setValue}/>
+              <ProcessOrders setValue={setValue} />
               <FinishedOrders />
             </TabContext>
           </div>
@@ -80,22 +85,36 @@ export default function OrdersPage() {
             <Box className={"member-box"}>
               <div className={"order-user-img"}>
                 <img
-                  src={"/img/justin.webp"}
+                  src={
+                    authMember?.memberImage
+                      ? `${serverApi}/${authMember.memberImage}`
+                      : "/icons/default-user.svg"
+                  }
                   className={"order-user-avatar"}
                   alt="user"
                 />
                 <img
-                  src={"/icons/user-badge.svg"}
+                  src={
+                    authMember?.memberType === MemberType.USER
+                      ? "/icons/user-badge.svg"
+                      : "/icons/restaurant.svg"
+                  }
                   className={"order-user-icon"}
                   alt="badge"
                 />
               </div>
-              <span className={"order-user-name"}>Justin</span>
-              <span className={"order-user-prof"}>USER</span>
+              <span className={"order-user-name"}>
+                {authMember?.memberNick}
+              </span>
+              <span className={"order-user-prof"}>
+                {authMember?.memberType}
+              </span>
               <div className={"liner"}></div>
               <div className={"order-user-address"}>
                 <LocationOnIcon sx={{ fontSize: 16 }} />
-                South Korea, Busan
+                {authMember?.memberAddress
+                  ? authMember.memberAddress
+                  : "No address"}
               </div>
             </Box>
 
