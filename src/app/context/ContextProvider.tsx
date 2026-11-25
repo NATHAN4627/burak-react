@@ -1,7 +1,15 @@
-import React, { ReactNode, useEffect, useState } from "react";
-import { GlobalContext } from "../hooks/useGlobals";
+import React, { createContext, ReactNode, useState } from "react";
 import { Member } from "../../lib/types/member";
 import Cookies from "universal-cookie";
+
+interface GlobalInterface {
+  authMember: Member | null;
+  setAuthMember: (member: Member | null) => void;
+  orderBuilder: Date;
+  setOrderBuilder: (input: Date) => void;
+}
+
+export const GlobalContext = createContext<GlobalInterface | undefined>(undefined);
 
 const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [authMember, setAuthMember] = useState<Member | null>(() => {
@@ -12,25 +20,6 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   });
 
   const [orderBuilder, setOrderBuilder] = useState<Date>(new Date());
-
-  // useEffect(() => {
-  //   const cookies = new Cookies();
-  //   const syncAuth = () => {
-  //     if (!cookies.get("accessToken")) localStorage.removeItem("memberData");
-  //     if (!localStorage.getItem("memberData")) setAuthMember(null);
-  //   };
-
-  //   syncAuth();
-  //   cookies.addChangeListener(syncAuth);
-  //   window.addEventListener("storage", syncAuth);
-  //   window.addEventListener("focus", syncAuth);
-
-  //   return () => {
-  //     cookies.removeChangeListener(syncAuth);
-  //     window.removeEventListener("storage", syncAuth);
-  //     window.removeEventListener("focus", syncAuth);
-  //   };
-  // }, []);
 
   return (
     <GlobalContext.Provider

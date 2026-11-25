@@ -1,16 +1,5 @@
 import { createContext, useContext } from "react";
-import { Member } from "../../lib/types/member";
-
-interface GlobalInterface {
-  authMember: Member | null;
-  setAuthMember: (member: Member | null) => void;
-  orderBuilder: Date;
-  setOrderBuilder: (input: Date) => void;
-}
-
-export const GlobalContext = createContext<GlobalInterface | undefined>(
-  undefined,
-);
+import { GlobalContext } from "../context/ContextProvider";
 
 export const useGlobals = () => {
   const context = useContext(GlobalContext);
