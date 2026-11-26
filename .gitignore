@@ -11,6 +11,9 @@
 # production
 /build
 
+# Local study notes
+/docs/loyiha-eslatmasi.md
+
 # misc
 .DS_Store
 .env.local
